@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import ProductForm from "../../components/ProductForm";
 import ProductList from "../../components/ProductList";
 import Product from "../../intreface/product";
-import Navbar from "../../components/Navar";
-import Footer from "../../components/Footer";
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -12,8 +10,8 @@ function HomePage() {
     setProducts([...products, newProduct]);
   };
 
-  const handleEditProduct = (editedProduct: Product) => {
-    const updatedProducts = products.map((product) =>
+  const handleEditProduct = async (editedProduct: Product) => {
+    const updatedProducts = await products.map((product) =>
       product.id === editedProduct.id ? editedProduct : product
     );
     setProducts(updatedProducts);
@@ -27,17 +25,23 @@ function HomePage() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <h1>Lista de Productos</h1>
-      <ProductForm onAddProduct={handleAddProduct} />
-      <ProductList
-        products={products}
-        onEditProduct={handleEditProduct}
-        onDeleteProduct={handleDeleteProduct}
-      />
-      <Footer />
-    </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <ProductForm onAddProduct={handleAddProduct} />
+        <ProductList
+          products={products}
+          onEditProduct={handleEditProduct}
+          onDeleteProduct={handleDeleteProduct}
+        />
+      </div>
+    </>
   );
 }
 

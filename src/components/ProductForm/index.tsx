@@ -36,54 +36,56 @@ const ProductForm: React.FC<ProductFormProps> = ({ onAddProduct }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <TextField
-          label="Categoría"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <TextField
-          label="Nombre del producto"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <TextField
-          label="Descripción"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <TextField
-          label="Precio"
-          type="number"
-          value={precio}
-          onChange={(e) => setPrecio(parseFloat(e.target.value))}
-          required
-        />
-      </div>
-      <div>
-        <Select
-          value={estado}
-          onChange={(e) => setEstado(e.target.value as string)}
-          required
-        >
-          <MenuItem value="">Seleccione un estado</MenuItem>
-          <MenuItem value="Activo">Activo</MenuItem>
-          <MenuItem value="Inactivo">Inactivo</MenuItem>
-        </Select>
-      </div>
-      <div>
-        <Button type="submit" variant="contained" color="primary">
-          Agregar Producto
-        </Button>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div>
+          <TextField
+            label="Categoría"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            label="Nombre del producto"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            label="Descripción"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <TextField
+            label="Precio"
+            type="number"
+            value={precio}
+            onChange={(e) => setPrecio(parseFloat(e.target.value))}
+            required
+          />
+        </div>
+        <div>
+          <Select
+            value={estado}
+            onChange={(e) => setEstado(e.target.value as string)}
+            required
+          >
+            <MenuItem value="">Seleccione un estado</MenuItem>
+            <MenuItem value="Activo">Activo</MenuItem>
+            <MenuItem value="Inactivo">Inactivo</MenuItem>
+          </Select>
+        </div>
+        <div>
+          <Button type="submit" variant="contained" color="primary">
+            Agregar Producto
+          </Button>
+        </div>
       </div>
     </form>
   );
