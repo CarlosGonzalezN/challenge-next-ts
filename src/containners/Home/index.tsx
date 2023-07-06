@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductForm from "../../components/ProductForm";
 import ProductList from "../../components/ProductList";
 import Product from "../../intreface/product";
+import GetProducts from "../../api-get/getProducts";
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,6 +24,14 @@ function HomePage() {
     );
     setProducts(updatedProducts);
   };
+  async function dataProduct() {
+    const data = await GetProducts();
+
+    setProducts(data);
+  }
+  useEffect(() => {
+    dataProduct();
+  }, []);
 
   return (
     <>
