@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { List, ListItem, ListItemText, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Product from "../../intreface/product";
+import EditModal from "../EditModal";
+import { useGlobalState } from "../../hooks/useContextState";
 
 interface ProductListProps {
   products: Product[];
-  onEditProduct: (product: Product) => void;
-  onDeleteProduct: (productId: number) => void;
+  handleDeleteProduct: (any) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
   products,
-  onEditProduct,
-  onDeleteProduct,
+  handleDeleteProduct,
 }) => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { categorys, states } = useGlobalState();
+
+  const handleEditProduct = (editedProduct: Product) => {
+    setSelectedProduct(editedProduct);
+  };
+
   return (
     <div>
       <List>
@@ -22,25 +29,20 @@ const ProductList: React.FC<ProductListProps> = ({
           <ListItem key={product.sku}>
             <ListItemText
               primary={product.nombre_producto}
-              secondary={
-                <>
-                  <span>{product.sku}</span>
-                  <span>{product.precio}</span>
-                </>
-              }
+              secondary={<span>{product.sku}</span>}
             />
             <div style={{ marginLeft: "auto" }}>
               <IconButton
                 edge="end"
                 aria-label="edit"
-                onClick={() => onEditProduct(product)}
+                onClick={() => handleEditProduct(product)}
               >
                 <EditIcon />
               </IconButton>
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => onDeleteProduct(product.id)}
+                onClick={() => handleDeleteProduct(product.id)}
               >
                 <DeleteIcon />
               </IconButton>
@@ -48,6 +50,14 @@ const ProductList: React.FC<ProductListProps> = ({
           </ListItem>
         ))}
       </List>
+      {selectedProduct && (
+        <EditModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          categorys={categorys}
+          states={states}
+        />
+      )}
     </div>
   );
 };

@@ -1,35 +1,30 @@
-import React, { useEffect, useState } from "react";
-import ProductForm from "../../components/ProductForm";
+import React, { useState, useEffect } from "react";
+import Layout from "../Layout";
+import { Button, Modal } from "@mui/material";
+import { useGlobalState } from "../../hooks/useContextState";
 import ProductList from "../../components/ProductList";
 import Product from "../../intreface/product";
-import GetProducts from "../../api-get/getProducts";
-import GetCategorys from "../../api-get/getCategory";
-import GetStateProducts from "../../api-get/getState";
-import EditModal from "../../components/EditModal";
+import CreateModal from "../../components/CreateModal";
 import CreateProduct from "../../api-create/createProduct";
-import { deleteProduct } from "../../api-delete/delteProduct";
-import Layout from "../Layout";
-function HomePage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categoria, setCategoria] = useState([]);
-  const [estado, setEstado] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+import DeleteProduct from "../../api-delete/delteProduct";
+
+const HomePage: React.FC = () => {
+  const { products, categorys, states } = useGlobalState();
+  const [openModal, setOpenModal] = useState(false);
+  const [productList, setProductList] = useState<Product[]>(products);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const handleAddProduct = async (newProduct: Product) => {
-    setProducts([...products, newProduct]);
     await CreateProduct(newProduct);
-  };
-
-  const handleEditProduct = (editedProduct: Product) => {
-    setSelectedProduct(editedProduct);
-  };
-
-  const handleUpdateProduct = (updatedProduct: Product) => {
-    const updatedProducts = products.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product
-    );
-    setProducts(updatedProducts);
-    setSelectedProduct(null);
+    setProductList((prevList) => [...prevList, newProduct]);
+    setOpenModal(false);
   };
 
   const handleDeleteProduct = (productId: number) => {
@@ -38,25 +33,11 @@ function HomePage() {
     const updatedProducts = products.filter(
       (product) => product.id !== productId
     );
-    setProducts(updatedProducts);
-    deleteProduct(productId);
+    setProductList(updatedProducts);
+    DeleteProduct(productId);
   };
-
-  async function getData() {
-    try {
-      const dataCategoria = await GetCategorys();
-      setCategoria(dataCategoria);
-      const dataState = await GetStateProducts();
-      setEstado(dataState);
-      const data = await GetProducts();
-      setProducts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
-    getData();
+    setProductList(products);
   }, []);
 
   return (
@@ -64,31 +45,33 @@ function HomePage() {
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "90vh",
         }}
       >
-        <ProductForm
-          onAddProduct={handleAddProduct}
-          categorys={categoria}
-          states={estado}
-        />
+        <Button
+          style={{ backgroundColor: "white", fontWeight: "bold" }}
+          onClick={handleOpenModal}
+        >
+          Nuevo producto
+        </Button>
+        <Modal open={openModal} onClose={handleCloseModal}>
+          <CreateModal
+            onClose={handleCloseModal}
+            categorys={categorys}
+            states={states}
+            onAddProduct={handleAddProduct}
+          />
+        </Modal>
         <ProductList
-          products={products}
-          onEditProduct={handleEditProduct}
-          onDeleteProduct={handleDeleteProduct}
+          products={productList}
+          handleDeleteProduct={handleDeleteProduct}
         />
       </div>
-      {selectedProduct && (
-        <EditModal
-          product={selectedProduct}
-          onUpdateProduct={handleUpdateProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
-      )}
     </Layout>
   );
-}
+};
 
 export default HomePage;

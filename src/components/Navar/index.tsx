@@ -1,13 +1,15 @@
-import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { AppBar, Button, Modal, Toolbar, Typography } from "@mui/material";
 
 const Navbar: React.FC = () => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6">Mi Tienda</Typography>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar style={{ margin: 0 }}>
+        <Toolbar style={{ justifyContent: "space-between" }}>
+          <Typography variant="h6">Mi Tienda</Typography>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

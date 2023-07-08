@@ -1,6 +1,6 @@
 interface Product {
   id: number;
-  sku: number;
+  sku: string;
   nombre_categoria: string[];
   nombre_producto: string;
   descripcion: string;

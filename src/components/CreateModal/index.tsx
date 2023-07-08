@@ -1,31 +1,46 @@
 import React, { useState } from "react";
-import { TextField, Button, Select, MenuItem } from "@mui/material";
-import Product from "../../intreface/product";
-import Loading from "../Loading";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
-interface ProductFormProps {
-  onAddProduct: (product: Product) => void;
+interface CreateModalProps {
+  onAddProduct: (any) => void;
+  onClose: () => void;
   categorys: string[];
   states: string[];
 }
+interface NewProduct {
+  sku: string;
+  nombre_categoria: string;
+  nombre_producto: string;
+  descripcion: string;
+  precio: number;
+  nombre_estado: string;
+}
 
-const ProductForm: React.FC<ProductFormProps> = ({
+const CreateModal: React.FC<CreateModalProps> = ({
   onAddProduct,
+  onClose,
   categorys,
   states,
 }) => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState(0);
-  const [categoria, setCategoria] = useState(categorys);
-  const [estado, setEstado] = useState(states);
-  const [isLoading, setIsLoading] = useState(false);
+  const [categoria, setCategoria] = useState("");
+  const [estado, setEstado] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const newProduct = {
-      sku: Math.random(),
+    const newProduct: NewProduct = {
+      sku: window.crypto.randomUUID(),
       nombre_categoria: categoria,
       nombre_producto: nombre,
       descripcion,
@@ -37,15 +52,15 @@ const ProductForm: React.FC<ProductFormProps> = ({
     setNombre("");
     setDescripcion("");
     setPrecio(0);
-    setCategoria([]);
-    setEstado([]);
+    setCategoria("");
+    setEstado("");
+    onClose();
   };
 
   return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle>Nueva revista</DialogTitle>
+      <DialogContent>
         <form onSubmit={handleSubmit}>
           <div
             style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
@@ -63,12 +78,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value as string)}
                 required
-                displayEmpty
-                inputProps={{ "aria-label": "Seleccione una categoría" }}
               >
-                <MenuItem value="" disabled>
-                  Seleccione una categoría
-                </MenuItem>
+                <MenuItem value="">Seleccione una categoría</MenuItem>
                 {categorys.map((cat) => (
                   <MenuItem key={cat.id} value={cat.nombre_categoria}>
                     {cat.nombre_categoria}
@@ -76,7 +87,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 ))}
               </Select>
             </div>
-
             <div>
               <TextField
                 label="Descripción"
@@ -99,12 +109,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 value={estado}
                 onChange={(e) => setEstado(e.target.value as string)}
                 required
-                displayEmpty
-                inputProps={{ "aria-label": "Seleccione un estado" }}
               >
-                <MenuItem value="" disabled>
-                  Seleccione un estado
-                </MenuItem>
+                <MenuItem value="">Seleccione un estado</MenuItem>
                 {states.map((est) => (
                   <MenuItem key={est.id} value={est.nombre_estado}>
                     {est.nombre_estado}
@@ -112,7 +118,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 ))}
               </Select>
             </div>
-
             <div>
               <Button type="submit" variant="contained" color="primary">
                 Agregar Producto
@@ -120,9 +125,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </div>
         </form>
-      )}
-    </>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} variant="contained" color="secondary">
+          Cancelar
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
-export default ProductForm;
+export default CreateModal;

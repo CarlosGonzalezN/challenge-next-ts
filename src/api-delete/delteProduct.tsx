@@ -1,4 +1,4 @@
-export const deleteProduct = async (productId: number): Promise<void> => {
+const DeleteProduct = async (productId: number): Promise<void> => {
   try {
     console.log(productId);
 
@@ -16,3 +16,4 @@ export const deleteProduct = async (productId: number): Promise<void> => {
     throw new Error("Error al realizar la solicitud");
   }
 };
+export default DeleteProduct;
