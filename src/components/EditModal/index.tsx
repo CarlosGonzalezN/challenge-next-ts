@@ -12,6 +12,10 @@ import {
 import Product from "../../intreface/product";
 import PathProduct from "../../api-update/UpdateProduct";
 
+interface EditedProduct extends Omit<Product, "id"> {
+  // Agrega los campos adicionales aquí si es necesario
+}
+
 interface EditModalProps {
   product: Product;
   onClose: () => void;
@@ -25,19 +29,14 @@ const EditModal: React.FC<EditModalProps> = ({
   categorys,
   states,
 }) => {
-  const [editedProduct, setEditedProduct] = useState<Product>(product);
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState(0);
-  const [categoria, setCategoria] = useState("");
-  const [estado, setEstado] = useState("");
+  const [editedProduct, setEditedProduct] = useState<EditedProduct>({
+    ...product,
+  });
 
   useEffect(() => {
-    setNombre(product.nombre_producto);
-    setDescripcion(product.descripcion);
-    setPrecio(product.precio);
-    setCategoria(product.nombre_categoria);
-    setEstado(product.nombre_estado);
+    setEditedProduct({
+      ...product,
+    });
   }, [product]);
 
   const handleChange = (
@@ -51,7 +50,7 @@ const EditModal: React.FC<EditModalProps> = ({
   };
 
   const UpdateProduct = (updatedProduct: Product) => {
-    // Lógica para actualizar el producto
+    // Logica para actualizar el producto
     PathProduct(updatedProduct);
     console.log("Actualizar producto:", updatedProduct);
   };
@@ -73,7 +72,7 @@ const EditModal: React.FC<EditModalProps> = ({
               <TextField
                 label="Nombre del producto"
                 name="nombre_producto"
-                value={nombre}
+                value={editedProduct.nombre_producto || ""}
                 onChange={handleChange}
                 required
               />
@@ -82,7 +81,7 @@ const EditModal: React.FC<EditModalProps> = ({
               <Select
                 label="Categoría"
                 name="nombre_categoria"
-                value={categoria}
+                value={editedProduct.nombre_categoria || ""}
                 onChange={handleChange}
                 required
               >
@@ -98,7 +97,7 @@ const EditModal: React.FC<EditModalProps> = ({
               <TextField
                 label="Descripción"
                 name="descripcion"
-                value={descripcion}
+                value={editedProduct.descripcion || ""}
                 onChange={handleChange}
                 required
               />
@@ -108,7 +107,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 label="Precio"
                 type="number"
                 name="precio"
-                value={precio}
+                value={editedProduct.precio || ""}
                 onChange={handleChange}
                 required
               />
@@ -117,7 +116,7 @@ const EditModal: React.FC<EditModalProps> = ({
               <Select
                 label="Estado"
                 name="nombre_estado"
-                value={estado}
+                value={editedProduct.nombre_estado || ""}
                 onChange={handleChange}
                 required
               >

@@ -11,7 +11,7 @@ import DeleteProduct from "../../api-delete/delteProduct";
 const HomePage: React.FC = () => {
   const { products, categorys, states } = useGlobalState();
   const [openModal, setOpenModal] = useState(false);
-  const [productList, setProductList] = useState<Product[]>(products);
+  const [productList, setProductList] = useState<Product[]>([]);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -36,9 +36,10 @@ const HomePage: React.FC = () => {
     setProductList(updatedProducts);
     DeleteProduct(productId);
   };
+
   useEffect(() => {
     setProductList(products);
-  }, []);
+  }, [products]);
 
   return (
     <Layout>
