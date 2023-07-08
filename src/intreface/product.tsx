@@ -1,10 +1,11 @@
 interface Product {
-  id: string;
-  categoria: string;
+  id: number;
+  sku: number;
+  nombre_categoria: string[];
   nombre_producto: string;
   descripcion: string;
   precio: number;
-  id_estado: string;
+  nombre_estado: string[];
 }
 
 export default Product;

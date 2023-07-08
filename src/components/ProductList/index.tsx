@@ -7,7 +7,7 @@ import Product from "../../intreface/product";
 interface ProductListProps {
   products: Product[];
   onEditProduct: (product: Product) => void;
-  onDeleteProduct: (productId: string) => void;
+  onDeleteProduct: (productId: number) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -19,10 +19,15 @@ const ProductList: React.FC<ProductListProps> = ({
     <div>
       <List>
         {products.map((product) => (
-          <ListItem key={product.id}>
+          <ListItem key={product.sku}>
             <ListItemText
               primary={product.nombre_producto}
-              secondary={product.descripcion}
+              secondary={
+                <>
+                  <span>{product.sku}</span>
+                  <span>{product.precio}</span>
+                </>
+              }
             />
             <div style={{ marginLeft: "auto" }}>
               <IconButton
