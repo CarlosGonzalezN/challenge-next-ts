@@ -1,5 +1,6 @@
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Typography } from "@mui/material";
 
 const Loading = () => {
   return (
@@ -12,6 +13,7 @@ const Loading = () => {
       }}
     >
       <CircularProgress />
+      <Typography>No hay productos que mostar</Typography>
     </div>
   );
 };

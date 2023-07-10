@@ -3,10 +3,11 @@ import Layout from "../Layout";
 import { Button, Modal } from "@mui/material";
 import { useGlobalState } from "../../hooks/useContextState";
 import ProductList from "../../components/ProductList";
-import Product from "../../intreface/product";
+import Product from "../../interface/product";
 import CreateModal from "../../components/CreateModal";
 import CreateProduct from "../../api-create/createProduct";
-import DeleteProduct from "../../api-delete/delteProduct";
+import DeleteProduct from "../../api-delete/deleteProduct";
+import Loading from "../../components/Loading";
 
 const HomePage: React.FC = () => {
   const { products, categorys, states } = useGlobalState();
@@ -52,12 +53,19 @@ const HomePage: React.FC = () => {
           height: "90vh",
         }}
       >
-        <Button
-          style={{ backgroundColor: "white", fontWeight: "bold" }}
-          onClick={handleOpenModal}
-        >
-          Nuevo producto
-        </Button>
+        <div>
+          <Button
+            style={{
+              backgroundColor: "white",
+              fontWeight: "bold",
+              marginTop: "100px",
+            }}
+            onClick={handleOpenModal}
+          >
+            Nueva revista
+          </Button>
+        </div>
+
         <Modal open={openModal} onClose={handleCloseModal}>
           <CreateModal
             onClose={handleCloseModal}
@@ -66,10 +74,15 @@ const HomePage: React.FC = () => {
             onAddProduct={handleAddProduct}
           />
         </Modal>
-        <ProductList
-          products={productList}
-          handleDeleteProduct={handleDeleteProduct}
-        />
+        <div></div>
+        {products ? (
+          <Loading />
+        ) : (
+          <ProductList
+            products={productList}
+            handleDeleteProduct={handleDeleteProduct}
+          />
+        )}
       </div>
     </Layout>
   );

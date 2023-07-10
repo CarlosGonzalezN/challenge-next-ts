@@ -9,7 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import Product from "../../intreface/product";
+import Product from "../../interface/product";
 import PathProduct from "../../api-update/UpdateProduct";
 
 interface EditedProduct extends Omit<Product, "id"> {

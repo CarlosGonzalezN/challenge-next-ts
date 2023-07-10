@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import Product from "../../intreface/product";
+import Product from "../../interface/product";
 
 interface ProductDetailModalProps {
   product: Product;

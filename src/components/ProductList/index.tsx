@@ -9,7 +9,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import Product from "../../intreface/product";
+import Product from "../../interface/product";
 import EditModal from "../EditModal";
 import ProductDetailModal from "../ViewProduct";
 import { useGlobalState } from "../../hooks/useContextState";

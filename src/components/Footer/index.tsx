@@ -1,21 +1,21 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
-    <Box style={{ margin: 0 }}>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{" "}
-        <span>
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </span>
-      </a>
-    </Box>
+    <footer
+      style={{
+        margin: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        alignmentBaseline: "auto",
+      }}
+    >
+      <Box>
+        <Typography>challenge Next</Typography>
+      </Box>
+    </footer>
   );
 };
 
