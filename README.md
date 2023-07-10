@@ -9,14 +9,12 @@ npm (v6.14.0 o superior)
 Instalación
 Para ejecutar la aplicación de forma local, sigue estos pasos:
 
-Clona el repositorio: git clone <repository-url>
+Clona el repositorio: git clone https://github.com/CarlosGonzalezN/challenge-next-ts
 Navega hasta el directorio del proyecto: cd challenge-next
 Instala las dependencias: npm install
 Uso
 Para iniciar el servidor de desarrollo, ejecuta el siguiente comando:
 
-arduino
-Copy code
 npm run dev
 Abre tu navegador y visita http://localhost:3000 para acceder a la aplicación.
 
@@ -32,8 +30,6 @@ Material-UI
 Estructura de carpetas
 La estructura de carpetas del proyecto es la siguiente:
 
-arduino
-Copy code
 ├── pages
 │ ├── index.tsx
 │ └── ...
@@ -71,8 +67,6 @@ Copy code
 Pruebas
 Para ejecutar las pruebas, utiliza el siguiente comando:
 
-arduino
-Copy code
 npm run test
 Las pruebas se encuentran en la carpeta **tests** y cubren varios componentes y funcionalidades de la aplicación.
 
