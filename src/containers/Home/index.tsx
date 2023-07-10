@@ -74,7 +74,6 @@ const HomePage: React.FC = () => {
             onAddProduct={handleAddProduct}
           />
         </Modal>
-        <div></div>
         {products ? (
           <Loading />
         ) : (
